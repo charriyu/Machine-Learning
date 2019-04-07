@@ -29,8 +29,17 @@ def classify(inX,dataSet,lable,k):
     return sortedClassCount[0][0]
 
 
-#开始进行测试
-group,lable = createDataSet()
-print(group)
-x = classify([0.7,0.7],group,lable,3)
-print(x)
+def file2matrix(filename):
+    fr = open(filename)
+    arrayOlines = fr.readlines()
+    numberOfLines = len(arrayOlines)
+    retuenMat = zeros((numberOfLines, 3))
+    classLableVector = []
+    index = 0
+    for line in arrayOlines:
+        line = line.strip()
+        listFromLine = line.split("\t")
+        retuenMat[index, :0] = listFromLine[0:3]
+        classLableVector.append(int(listFromLine[-1]))
+        index += 1
+    return retuenMat, classLableVector
