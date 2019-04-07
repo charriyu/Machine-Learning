@@ -1,11 +1,17 @@
 from numpy import *
 import operator
 
+
+# 建立数据集
 def createDataSet():
     group = array([[1.0,1.1],[1.0,1.0],[0,0],[0,0.1]])
     lable = ['A','A','B','B']
     return group, lable;
 
+
+# 控制输入inX 表示要测试的顶点数据
+# dateSet表示二维数据集的数据进行训练
+# K值表示进行KNN算法时进行的前k项选择
 def classify(inX,dataSet,lable,k):
     dataSetSize = dataSet.shape[0]
     diffMat = tile(inX,(dataSetSize,1)) - dataSet
@@ -22,6 +28,8 @@ def classify(inX,dataSet,lable,k):
     sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(1), reverse=True)
     return sortedClassCount[0][0]
 
+
+#开始进行测试
 group,lable = createDataSet()
 print(group)
 x = classify([0.7,0.7],group,lable,3)
