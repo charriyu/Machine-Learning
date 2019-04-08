@@ -29,17 +29,26 @@ def classify(inX,dataSet,lable,k):
     return sortedClassCount[0][0]
 
 
+# 将文本转换为NumPy的解析程序
 def file2matrix(filename):
+    # 打开文件
     fr = open(filename)
+    # 读取文件所有内容
     arrayOlines = fr.readlines()
+    # 得到文件行数
     numberOfLines = len(arrayOlines)
+    # 返回的NumPy矩阵,解析完成的数据:numberOfLines行,3列
     retuenMat = zeros((numberOfLines, 3))
+    # 返回的分类标签向量
     classLableVector = []
+    #行的索引值
     index = 0
     for line in arrayOlines:
+        #s.strip(rm)，当rm空时,默认删除空白符(包括'\n','\r','\t',' ')
         line = line.strip()
         listFromLine = line.split("\t")
-        retuenMat[index, :0] = listFromLine[0:3]
+        # 将数据前三列提取出来,存放到returnMat的NumPy矩阵中,也就是特征矩阵
+        retuenMat[index, :] = listFromLine[0:3]
         classLableVector.append(int(listFromLine[-1]))
         index += 1
     return retuenMat, classLableVector
