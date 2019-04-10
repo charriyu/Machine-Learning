@@ -52,3 +52,21 @@ def file2matrix(filename):
         classLableVector.append(int(listFromLine[-1]))
         index += 1
     return retuenMat, classLableVector
+
+
+# 归一化特征值，目的是为了将任意的取值范围值转换为0-1之间的值，使所有的影响相同
+# 归一化公式：newValue = (oldValue - min)/(max - min)
+def autoNorm(dataSet):
+    # min中的参数0使得函数可以从列中选取最小值而不是选取当前行中最小值
+    # 对numpy中参数为axis，其中axis没有设置时取所有值中的最小值，axis=0时取所有列的最小值，axsi=1时取所有行的最小值
+    # 对于numpy中的max函数参数设置和前面min函数一样
+    minVals = dataSet.min(0)
+    maxVals = dataSet.max(0)
+    # 取值为最大值和最小值之间的差值，结果是一个集合
+    rangs = maxVals - minVals
+    # zeros函数
+    normDataSet = zeros(shape(dataSet))
+    m = dataSet.shape[0]
+    normDataSet = dataSet - tile(minVals, (m, 1))
+    normDataSet = normDataSet / tile(rangs, (m, 1))
+    return normDataSet, rangs, minVals
